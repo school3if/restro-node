@@ -6,10 +6,9 @@ const router = require('./routers/main');
 const mongoose = require('mongoose');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const bodyParser = require('body-parser');
-var cfg = require('./config.json');
 
-const MONGO_PASSWORD = process.env.password || cfg.password;
-const MONGO_SECRET = process.env.secret || cfg.secret;
+const MONGO_PASSWORD = process.env.password || "school3if";
+const MONGO_SECRET = process.env.secret || "secretmongoosetoken"
 
 const app = express();
 const PORT = 3000;
