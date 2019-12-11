@@ -5,10 +5,10 @@ const session = require('express-session');
 const router = require('./routers/main');
 const mongoose = require('mongoose');
 const MongoDBStore = require('connect-mongodb-session')(session);
-const bodyParser = require('body-parser');
+const cfg = require('./config.json');
 
-const MONGO_PASSWORD = process.env.password || "school3if";
-const MONGO_SECRET = process.env.secret || "secretmongoosetoken"
+const MONGO_PASSWORD = process.env.password || cfg.password;
+const MONGO_SECRET = process.env.secret || cfg.secret;
 
 const app = express();
 const PORT = 3000;
@@ -19,12 +19,10 @@ const hbs = exphbs.create({
 });
 
 var store = new MongoDBStore({
-    uri: 'mongodb+srv://restro:' + MONGO_PASSWORD + '@restro-ibylf.mongodb.net/test',
+    uri: 'mongodb+srv://restro:' + MONGO_PASSWORD + '@restro-tygzx.mongodb.net/restro',
     databaseName: "restro",
     collection: "sessions"
 });
-
-const parser = bodyParser.urlencoded({ extended: false });
 
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
@@ -46,7 +44,7 @@ serverStart();
 
 async function serverStart(){
     try{
-        await mongoose.connect('mongodb+srv://restro:' + MONGO_PASSWORD + '@restro-ibylf.mongodb.net/test', {
+        await mongoose.connect('mongodb+srv://restro:' + MONGO_PASSWORD + '@restro-tygzx.mongodb.net/restro', {
             useNewUrlParser: true,
             useFindAndModify: false,
             useUnifiedTopology: true
