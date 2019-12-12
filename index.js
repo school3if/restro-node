@@ -2,10 +2,14 @@ const express = require("express");
 const path = require('path');
 const exphbs = require("express-handlebars");
 const session = require('express-session');
-const router = require('./routers/main');
+const routers = new Array();
 const mongoose = require('mongoose');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const cfg = require('./config.json');
+
+routers[0] = require('./routers/main');
+routers[1] = require('./routers/register');
+routers[2] = require('./routers/login');
 
 const MONGO_PASSWORD = process.env.password || cfg.password;
 const MONGO_SECRET = process.env.secret || cfg.secret;
@@ -32,13 +36,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: MONGO_SECRET,
     cookie: {
-        maxAge: 3600*24*5*1000
+        maxAge: 3600*24*365*1000
     },
     store: store,
     resave: true,
     saveUninitialized: false
 }));
-app.use(router);
+
+app.use(routers[0]);
+app.use(routers[1]);
+app.use(routers[2]);
 
 serverStart();
 

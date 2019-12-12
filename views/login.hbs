@@ -7,16 +7,16 @@
     </div>
     <div class="form-group">
         <label for="inputPassword">Пароль</label>
-        <input type="password" class="form-control" id="inputPassword" name="inputPassword">
+        <input type="password" class="form-control" id="inputPassword" name="password">
     </div>
     <button type="submit" class="btn btn-primary" id="btnSub">Ввійти</button>
 </form>
 <script type="text/javascript">
-    var input = document.getElementById('inputLogin');
-    var login = getCookie("login") || "";
-    var submit = document.getElementById('btnSub');
+    var login = getCookie('login') || "";
+    var input = document.getElementById("inputLogin");
+    var submit = document.getElementById("btnSub");
     input.value = login;
-    submit.onlick = function(){
+    submit.onclick = function(){
         saveCookie('login', input.value, 94608000);
     };
 </script>

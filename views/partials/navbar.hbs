@@ -8,10 +8,16 @@
             <ul class="navbar-nav mr-auto">
 
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <a class="text-dark mr-3" href="/login">Вхід</a>
-                <a class="btn btn-outline-success my-2 my-sm-0" href="/register">Реєстрація</a>
-            </form>
+            <div class="my-2 my-lg-0">
+                {{#if username}}
+                    <a class="text-dark mr-3" href="#">{{{username}}}</a>
+                    <a href="#"><img src="img/cart.png" alt="Корзина" class="cart-image mr-3 my-2"></a>
+                    <a class="btn btn-outline-danger my-2 my-sm-0" href="/logout">Вихід</a>
+                {{else}}
+                    <a class="text-dark mr-3" href="/login">Вхід</a>
+                    <a class="btn btn-outline-success my-2 my-sm-0" href="/register">Реєстрація</a>
+                {{/if}}
+            </div>
         </div>
     </nav>
 </div>
