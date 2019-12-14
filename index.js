@@ -10,6 +10,7 @@ const cfg = require('./config.json');
 routers[0] = require('./routers/main');
 routers[1] = require('./routers/register');
 routers[2] = require('./routers/login');
+routers[3] = require('./routers/cart');
 
 const MONGO_PASSWORD = process.env.password || cfg.password;
 const MONGO_SECRET = process.env.secret || cfg.secret;
@@ -31,6 +32,7 @@ var store = new MongoDBStore({
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', 'views');
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
@@ -46,6 +48,7 @@ app.use(session({
 app.use(routers[0]);
 app.use(routers[1]);
 app.use(routers[2]);
+app.use(routers[3]);
 
 serverStart();
 

@@ -4,21 +4,29 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const sha256 = require('sha256');
 const parser = bodyParser.urlencoded({ extended: false });
-
-const User = require('../models/user');
+const userActions = require('../controllers/user');
+const cartActions = require('../controllers/cart');
 const Dish = require('../models/dish');
 const Menu = require('../models/menu');
 
 router.get('/', async (req, res) => {
     const menu = await getDishes();
-    if(req.session.logged){
-        var data = await getUserData(req.session.username, req.session.password);
-        if(data.length > 0) return res.render('index', {
+    if(req.session.logged) {
+        var data = await userActions.getUserData(req.session.username, req.session.password);
+        if(data.length > 0) {
+            const cart = req.session.cart ? req.session.cart : await cartActions.getUserCart(data[0]._id);
+            let cartQuantity = null;
+            if (cart) {
+                cartQuantity = cart.dishes.reduce((summ, item) => summ += item.quantity, 0);
+            }
+            return res.render('index', {
                 title: "Головна",
                 menu,
                 username: data[0].username,
-                role: data[0].role
+                role: data[0].role,
+                cartQuantity
             });
+        }
         else req.session.destroy();
     }
     res.render('index', {
@@ -30,15 +38,6 @@ router.get('/', async (req, res) => {
 router.get('/logout', (req, res) => {
     req.session.destroy(() => { res.redirect('/') });
 });
-
-async function getUserData(login, password){
-    var data = [];
-    await User.find({username: login, password: password}, (err, res) => {
-        if(err) throw err;
-        data = res;
-    });
-    return data;
-}
 
 async function getDishes() {
     const menu = await getMenu();

@@ -30,6 +30,7 @@ router.post('/login', parser, (req, res) => {
                 error: "Ви ввели неправильний пароль."
             });
             req.session.logged = true;
+            req.session.userId = result[0]._id;
             req.session.username = req.body.username;
             req.session.password = crypted_password;
             res.redirect('/');
