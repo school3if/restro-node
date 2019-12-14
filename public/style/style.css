@@ -1,3 +1,12 @@
 img.cart-image{
     width: 40px;
 }
+
+/* MAIN PAGE */
+.card.dish-card .card-title {
+    min-height: 50px;
+  }
+
+.card.dish-card  .btn-secondary {
+    cursor: not-allowed;
+  }
