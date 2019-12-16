@@ -11,6 +11,7 @@ routers[0] = require('./routers/main');
 routers[1] = require('./routers/register');
 routers[2] = require('./routers/login');
 routers[3] = require('./routers/cart');
+routers[4] = require('./routers/admin');
 
 const MONGO_PASSWORD = process.env.password || cfg.password;
 const MONGO_SECRET = process.env.secret || cfg.secret;
@@ -49,6 +50,7 @@ app.use(routers[0]);
 app.use(routers[1]);
 app.use(routers[2]);
 app.use(routers[3]);
+app.use(routers[4]);
 
 serverStart();
 

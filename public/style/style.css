@@ -1,10 +1,20 @@
+/* GENERAL */
+a:hover{
+  text-decoration: none;
+}
+
 /* NAVBAR */
 img.cart-image{
-    width: 40px;
+  width: 40px;
+}
+
+img.admin-image{
+  width: 40px;
 }
 
 .navbar .mini-cart {
   position: relative;
+  text-decoration: none;
 }
 
 .navbar .mini-cart p {
@@ -39,4 +49,22 @@ img.cart-image{
   float: left;
   margin-right: 5px;
   transform: translateY(25%);
+}
+
+/* CART */
+.cart-table th{
+  text-align: center;
+}
+.cart-table th:nth-child(3){
+  width: 10%;
+}
+.cart-table th:nth-child(3) input{
+  text-align: center;
+}
+.cart-table th:nth-child(4){
+  width: 30%;
+}
+.btn-table-group{
+  display: flex;
+  justify-content: space-around;
 }

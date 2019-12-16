@@ -13,6 +13,7 @@ router.get('/', async (req, res) => {
     const menu = await getDishes();
     if(req.session.logged) {
         var data = await userActions.getUserData(req.session.username, req.session.password);
+        console.log(data);
         if(data.length > 0) {
             const cart = req.session.cart ? req.session.cart : await cartActions.getUserCart(data[0]._id);
             let cartQuantity = null;
@@ -54,10 +55,10 @@ async function getMenu(date = new Date()) {
     let nextDay = new Date(date);
     nextDay.setDate(date.getDate() + 1);
     return await Menu.findOne({
-        "date": {
+        /*"date": {
             "$gte": date, 
             "$lt": nextDay
-        }},
+        }*/},
         (err, res) => {
             if(err) throw err;
             return res;

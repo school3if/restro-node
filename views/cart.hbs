@@ -1,2 +1,25 @@
-<h2 class="text-center mt-3">Кошик</h1>
-{{cart}}
+<div class="container">
+    <h2 class="text-center mt-3">Кошик</h2>
+    <table class="table cart-table mt-3">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Назва страви</th>
+                <th scope="col">Вартість</th>
+                <th scope="col">Кількість</th>
+                <th scope="col">Керування</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each cart.dishes}}
+                <tr>
+                    <form method="POST">
+                        <th>{{{name}}}</th>
+                        <th>{{{price}}} за порцію</th>
+                        <th><input type="number" value="{{{quantity}}}" class="form-control w-1"></th>
+                        <th><div class="btn-table-group"><button class="btn btn-success" type="submit">Зберегти</button><button class="btn btn-danger">Видалити</button></div></th>
+                    </form>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

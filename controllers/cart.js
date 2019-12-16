@@ -1,12 +1,5 @@
 const Cart = require('../models/cart');
 
-async function getUserData(login){
-  return await User.findOne({username: login}, (err, res) => {
-    if(err) throw err;
-    return res;
-  });
-}
-
 async function getUserCart(user) {
   return await Cart.findOne({user}, (err, res) => {
     if (err) throw err;
