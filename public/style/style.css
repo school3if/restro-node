@@ -68,3 +68,8 @@ img.admin-image{
   display: flex;
   justify-content: space-around;
 }
+
+#statistic a:first-child {
+  padding: 0;
+  border: 0;
+}

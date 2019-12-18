@@ -1,25 +1,35 @@
 <div class="container">
     <h2 class="text-center mt-3">Кошик</h2>
-    <table class="table cart-table mt-3">
+    {{#if cartQuantity}}
+    <table class="table table-hover cart-table mt-3">
         <thead class="thead-light">
             <tr>
                 <th scope="col">Назва страви</th>
-                <th scope="col">Вартість</th>
+                <th scope="col">Вартість/порція</th>
                 <th scope="col">Кількість</th>
                 <th scope="col">Керування</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="tbody">
             {{#each cart.dishes}}
-                <tr>
-                    <form method="POST">
-                        <th>{{{name}}}</th>
-                        <th>{{{price}}} за порцію</th>
-                        <th><input type="number" value="{{{quantity}}}" class="form-control w-1"></th>
-                        <th><div class="btn-table-group"><button class="btn btn-success" type="submit">Зберегти</button><button class="btn btn-danger">Видалити</button></div></th>
-                    </form>
+                <tr class="cart-dish">
+                    <th>{{{name}}}</th>
+                    <th>{{{price}}}</th>
+                    <th><input type="number" min="1" value="{{{quantity}}}" class="form-control w-1"></th>
+                    <th><div class="btn-table-group">
+                    <button class="btn btn-danger btn-delete" data-id="{{{dishId}}}" onclick="deleteFromCart(event)">Видалити</button></div></th>
                 </tr>
             {{/each}}
         </tbody>
+          <tr>
+            <td colspan="2" class="text-right">До сплати:</td>
+            <td id="totalPrice" class="text-left font-weight-bold">{{cartTotal}}</td>
+            <td><div onclick="updateCart(event)" class="btn btn-primary float-right">Оновити кошик</div></td>
+            </tr>
+        </tfoot>
     </table>
+
+    {{else }}
+    <div class="row text-center">Ви ще нічого не замовили</div> 
+    {{/if}}
 </div>

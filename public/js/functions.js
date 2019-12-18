@@ -46,7 +46,7 @@ async function addToCart(dish, quantity = 1) {
     let response = await fetch('/cart', {
         method: 'POST',
         headers: {'Content-Type': 'application/json;charset=utf-8'},
-        body: JSON.stringify(dish)
+        body: JSON.stringify([dish])
     });
     if (response.ok) {
         return await response.json();
@@ -88,9 +88,34 @@ async function deleteFromCartQuery(dish){
     if(response.ok) return response.json();
 }
 
-async function dynamicDelete(id){
+function dynamicDelete(id){
     let dishes = document.getElementsByClassName('btn-delete');
     for(var i = 0; i < dishes.length; i++){
         if(dishes[i].dataset.id === id) return dishes[i].parentNode.parentNode.parentNode.remove();
+    }
+}
+
+async function updateCart(event) {
+    const cartDishes = document.querySelectorAll('.cart-dish');
+    const dishes = [];
+    let summ = 0;
+    let count = 0;
+    for (dishElem of cartDishes) {
+        const dish = {};
+        dish.dishId = dishElem.getElementsByTagName('button')[0].dataset.id;
+        dish.quantity = parseInt(dishElem.getElementsByTagName('input')[0].value);
+        dish.price = parseFloat(dishElem.getElementsByTagName('th')[1].innerText)
+        count += dish.quantity;
+        summ += dish.quantity * dish.price;
+        dishes.push(dish);
+    }
+    let response = await fetch('/cart', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json;charset=utf-8'},
+        body: JSON.stringify(dishes)
+    });
+    if (response.ok) {
+        updateMiniCart(count);
+        document.getElementById('totalPrice').innerText = summ.toFixed(2);
     }
 }

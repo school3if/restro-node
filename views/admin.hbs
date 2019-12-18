@@ -3,13 +3,37 @@
     <div class="row">
 		<div class="col-12 col-md-3 border-right">
 			<div class="content">
-	            <div class="list-group">
-                    <a href="/admin/orders" class="list-group-item list-group-item-action">Замовлення</a>
-                    <a href="/admin/stock" class="list-group-item list-group-item-action">Склад</a>
-                    <a href="/admin/dishes/add" class="list-group-item list-group-item-action">Додати страву</a>
-                    <a href="/admin/dishes/add" class="list-group-item list-group-item-action">Статистикаы</a>
+	            <div class="list-group nav nav-pills">
+                    <a data-toggle="pill" href="#orders" class="list-group-item list-group-item-action active">Замовлення</a>
+                    <a data-toggle="pill" href="#stock" class="list-group-item list-group-item-action">Склад</a>
+                    <a data-toggle="pill" href="#addDish" class="list-group-item list-group-item-action">Додати страву</a>
+                    <a data-toggle="pill" href="#statistic" class="list-group-item list-group-item-action">Статистика</a>
                 </div>
 	        </div>
+        </div>
+        <div class="col">
+            <div class="tab-content">
+                <div id="orders" class="tab-pane fade show active">
+                    <h3>HOME</h3>
+                    <p>Some content.</p>
+                </div>
+                <div id="stock" class="tab-pane fade">
+                    <h3>Menu 1</h3>
+                    <p>Some content in menu 1.</p>
+                </div>
+                <div id="addDish" class="tab-pane fade">
+                    <h3>Menu 2</h3>
+                    <p>Some content in menu 2.</p>
+                </div>
+                <div id="statistic" class="tab-pane fade">
+                    <ul class="nav nav-tabs nav-justified">
+                        <li class="active"><a data-toggle="pill" href="#statisticOrders">Замовлення</a></li>
+                        <li><a data-toggle="pill" href="#statisticProfits">Прибутки</a></li>
+                    </ul>
+                    <div id="statisticOrders" class="tab-pane fade show active">Orders</div>
+                    <div id="statisticProfits" class="tab-pane fade">Прибутки</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

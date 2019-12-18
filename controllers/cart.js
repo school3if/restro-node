@@ -7,22 +7,25 @@ async function getUserCart(user) {
   })
 }
 
-async function updateCart(user, dish) {
+async function updateCart(user, dishesList) {
   let cart = await getUserCart(user);
   if (!cart) {
+    console.log('new cart');
     cart = new Cart;
     cart.user = user;
-    cart.dishes = [dish]
+    cart.dishes = [...dishesList]
   } else {
     const dishes = cart.dishes;
-    const dishIndex = await dishes.findIndex(item => item.dishId === dish.dishId);
-    if (dishIndex === -1) {
-      cart.dishes.push(dish);
-    } else {
-      cart.dishes[dishIndex].quantity += dish.quantity;
+    for (dish of dishesList) {
+      const dishIndex = dishes.findIndex(item => item.dishId === dish.dishId);
+      if (dishIndex === -1 && dish.dishId !== 'undefined') {
+        cart.dishes.push(dish);
+      } else {
+        cart.dishes[dishIndex].quantity = dish.quantity;
+      }
     }
   }
-  cart.save();
+  await cart.save();
   return cart;
 }
 
@@ -41,4 +44,8 @@ async function deleteFromCart(user, dish){
   }
 }
 
-module.exports = {updateCart, getUserCart, deleteFromCart};
+function getCartQuantity(cartObj){
+  return cartObj.dishes.reduce((summ, item) => summ += item.quantity, 0);
+}
+
+module.exports = {updateCart, getUserCart, getCartQuantity, deleteFromCart};

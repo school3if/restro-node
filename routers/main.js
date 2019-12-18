@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
             const cart = req.session.cart ? req.session.cart : await cartActions.getUserCart(data[0]._id);
             let cartQuantity = null;
             if (cart) {
-                cartQuantity = cart.dishes.reduce((summ, item) => summ += item.quantity, 0);
+                cartQuantity = cartActions.getCartQuantity(cart);
             }
             return res.render('index', {
                 title: "Головна",

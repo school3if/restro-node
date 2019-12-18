@@ -12,13 +12,18 @@ router.get('/cart', async (req, res) => {
     if(data.length > 0)
       {
         let cart = await cartActions.getUserCart(data[0]._id);
-        let cartQuantity = await cart.dishes.reduce((summ, item) => summ += item.quantity, 0);
-        return res.render('cart', {
+        let cartQuantity = null;
+        let cartTotal = 0;
+        if (cart) {
+          cartQuantity = cartActions.getCartQuantity(cart);
+          cartTotal = cart.dishes.reduce((total, item) => total += item.quantity * item.price, 0).toFixed(2);
+        }
+      return res.render('cart', {
           title: "Кошик",
           username: req.session.username,
           role: data[0].role,
           cart,
-          cartQuantity
+          cartQuantity, cartTotal
         });
       }
     else{
