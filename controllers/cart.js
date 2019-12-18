@@ -14,14 +14,15 @@ async function updateCart(user, dish) {
     cart.user = user;
     cart.dishes = [dish]
   } else {
+    const dishes = cart.dishes;
+    const dishIndex = dishes.findIndex(item => item.dishId === dish.dishId);
+    if (dishIndex === -1) {
+      cart.dishes.push(dish);
+    } else {
+      cart.dishes[dishIndex].quantity = dish.quantity;
+    }
   }
-  const dishes = cart.dishes;
-  const dishIndex = dishes.findIndex(item => item.dishId === dish.dishId);
-  if (dishIndex === -1) {
-    cart.dishes.push(dish);
-  } else {
-    cart.dishes[dishIndex].quantity = dish.quantity;
-  }
+
   cart.save();
   return cart;
 }

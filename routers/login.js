@@ -42,12 +42,14 @@ router.post('/login', parser, (req, res) => {
 });
 
 async function getUserData(login, password){
-    var data = false;
+    // var data = false;
     await User.find({username: login, password: password}, (err, res) => {
         if(err) throw err;
-        if(res.length > 0) data = res;
+        if(res.length > 0) {
+            return res 
+        } else return false;
     });
-    return data;
+    // return data;
 }
 
 module.exports = router;
