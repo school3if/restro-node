@@ -27,7 +27,7 @@ async function addToCartClick(event) {
     const dish = {
         dishId: button.dataset.id,
         name: button.dataset.name,
-        price: button.dataset.price
+        price: button.dataset.price,
     }
     button.classList.remove('btn-primary');
     button.classList.add('btn-secondary', 'spinner');
@@ -63,4 +63,34 @@ function updateMiniCart(count) {
         miniCart.append(quantity);
     }
     quantity.innerHTML = count;
+}
+
+async function deleteFromCart(event){
+    event.preventDefault();
+    const button = event.target;
+    let dish = { dishid: button.dataset.id };
+    button.classList.remove('btn-danger');
+    button.classList.add('btn-secondary', 'spinner');
+    cart = await deleteFromCartQuery(dish);
+    button.classList.remove('btn-secondary', 'spinner');
+    button.classList.add('btn-danger');
+    const cartQuantity = cart.dishes.reduce((summ, item) => summ += item.quantity, 0);
+    updateMiniCart(cartQuantity);
+    dynamicDelete(dish.dishid);
+}
+
+async function deleteFromCartQuery(dish){
+    let response = await fetch('/cart', {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json;charset=utf-8'},
+        body: JSON.stringify(dish)
+    });
+    if(response.ok) return response.json();
+}
+
+async function dynamicDelete(id){
+    let dishes = document.getElementsByClassName('btn-delete');
+    for(var i = 0; i < dishes.length; i++){
+        if(dishes[i].dataset.id === id) return dishes[i].parentNode.parentNode.parentNode.remove();
+    }
 }
