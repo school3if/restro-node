@@ -44,8 +44,15 @@ async function deleteFromCart(user, dish){
   }
 }
 
+async function deleteCart(cartId) {
+  Cart.deleteOne({ "_id" : cartId }, function (err, res) {
+    if (err) return next (err);
+    return true;
+  });
+}
+
 function getCartQuantity(cartObj){
   return cartObj.dishes.reduce((summ, item) => summ += item.quantity, 0);
 }
 
-module.exports = {updateCart, getUserCart, getCartQuantity, deleteFromCart};
+module.exports = {updateCart, getUserCart, getCartQuantity, deleteFromCart, deleteCart};

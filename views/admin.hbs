@@ -4,21 +4,28 @@
 		<div class="col-12 col-md-3 border-right">
 			<div class="content">
 	            <div class="list-group nav nav-pills">
-                    <a data-toggle="pill" href="#orders" class="list-group-item list-group-item-action active">Замовлення</a>
-                    <a data-toggle="pill" href="#stock" class="list-group-item list-group-item-action">Склад</a>
+                    <a data-toggle="pill" href="#stock" class="list-group-item list-group-item-action active">Склад</a>
+                    <a data-toggle="pill"  onclick="getOrders()" href="#orders" class="list-group-item list-group-item-action">Замовлення</a>
                     <a data-toggle="pill" href="#addDish" class="list-group-item list-group-item-action">Додати страву</a>
                     <a data-toggle="pill" href="#statistic" class="list-group-item list-group-item-action">Статистика</a>
                 </div>
 	        </div>
         </div>
-        <div class="col">
+        <div class="col-12 col-md-9">
             <div class="tab-content">
-                <div id="orders" class="tab-pane fade show active">
-                    <h3>HOME</h3>
-                    <p>Some content.</p>
+                <div id="orders" class="tab-pane fade">
+                    <h3>Замовлення</h3>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="thead-light">
+                                <tr><th scope="col">№</th><th scope="col">Замовлення</th><th scope="col">Дата</th><th scope="col">Вартість</th><th scope="col">Статус</th></tr>
+                            </thead>
+                            <tbody id="orderTable"></tbody>
+                        </table>
+                    </div>
                 </div>
-                <div id="stock" class="tab-pane fade">
-                    <h3>Menu 1</h3>
+                <div id="stock" class="tab-pane fade show active">
+                    <h3>Облік продуктів</h3>
                     <p>Some content in menu 1.</p>
                 </div>
                 <div id="addDish" class="tab-pane fade">

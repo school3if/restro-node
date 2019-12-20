@@ -96,6 +96,19 @@ function dynamicDelete(id){
 }
 
 async function updateCart(event) {
+    const cart = getCartData();
+    let response = await fetch('/cart', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json;charset=utf-8'},
+        body: JSON.stringify(cart.dishes)
+    });
+    if (response.ok) {
+        updateMiniCart(cart.count);
+        document.getElementById('totalPrice').innerText = cart.summ.toFixed(2);
+    }
+}
+
+function getCartData() {
     const cartDishes = document.querySelectorAll('.cart-dish');
     const dishes = [];
     let summ = 0;
@@ -109,13 +122,51 @@ async function updateCart(event) {
         summ += dish.quantity * dish.price;
         dishes.push(dish);
     }
-    let response = await fetch('/cart', {
+    return { dishes, summ, count }
+}
+
+async function confirmOrder() {
+    const userPhone = document.getElementById('userPhone').value;
+    const deliveryAdress = document.getElementById('deliveryAdress').value;
+    let response = await fetch('/orders', {
         method: 'POST',
         headers: {'Content-Type': 'application/json;charset=utf-8'},
-        body: JSON.stringify(dishes)
+        body: JSON.stringify({userPhone, deliveryAdress})
     });
     if (response.ok) {
-        updateMiniCart(count);
-        document.getElementById('totalPrice').innerText = summ.toFixed(2);
+        updateMiniCart(0);
+        const confirmMessage = document.getElementById('confirmMessage');
+        confirmMessage.classList.remove('d-none');
+        setTimeout(function() { window.location = '/';}, 2000)
+    }
+}
+
+
+async function getOrders() {
+    console.log('get orders');
+    let response = await fetch('/orders', {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json;charset=utf-8'},
+    });
+    if (response.ok) {
+        document.getElementById('orderTable');
+        const orders = await response.json();
+        let i=0;
+        for (order of orders) {
+            i++;
+            const orderRow = document.createElement('tr');
+            orderRow.innerHTML = `
+            <th scope="row">${i}</th>
+            <td>${JSON.stringify(order.order)}</td>
+            <td>${order.createdAt}</td>
+            <td>${order.price} грн.</td>
+            <td>${order.status}</td>
+            <td><?php echo $order_status;?></td>
+            `;
+            orderTable.append(orderRow);
+        }
+    } else {
+        console.log('bad')
+        return null;
     }
 }

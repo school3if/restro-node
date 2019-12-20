@@ -12,7 +12,7 @@ const orderSchema = new Schema({
         type: Schema.Types.ObjectId, ref: 'Dish',
         required: true
       },
-      quantity: Number
+      quantity: {type: Number},
     }],
     required: true
   },
@@ -22,6 +22,10 @@ const orderSchema = new Schema({
   },
   deliveryTime: {
     type: Date,
+    // required: true
+  },
+  userPhone: {
+    type: String,
     required: true
   },
   deliveryAdress: {
@@ -33,6 +37,7 @@ const orderSchema = new Schema({
     required: true,
     default: false
   }
-});
+},
+{ timestamps: true });
 
 module.exports = mongoose.model('Order', orderSchema);
