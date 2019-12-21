@@ -2,6 +2,7 @@ const {Router} = require('express');
 const router = Router();
 const userActions = require('../controllers/user');
 const cartActions = require('../controllers/cart');
+const Dish = require('../models/dish');
 
 router.get('/admin', async (req, res) => {
     if(req.session.logged){

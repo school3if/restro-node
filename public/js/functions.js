@@ -1,3 +1,4 @@
+var order_status = false;
 function getCookie(name) {
     var cookie = " " + document.cookie;
     var search = " " + name + "=";
@@ -86,6 +87,7 @@ async function deleteFromCartQuery(dish){
         body: JSON.stringify(dish)
     });
     if(response.ok) return response.json();
+    else return null;
 }
 
 function dynamicDelete(id){
@@ -143,12 +145,13 @@ async function confirmOrder() {
 
 
 async function getOrders() {
-    console.log('get orders');
+    if(order_status) return;
     let response = await fetch('/orders', {
         method: 'GET',
         headers: {'Content-Type': 'application/json;charset=utf-8'},
     });
     if (response.ok) {
+        order_status = true;
         document.getElementById('orderTable');
         const orders = await response.json();
         let i=0;
@@ -161,12 +164,8 @@ async function getOrders() {
             <td>${order.createdAt}</td>
             <td>${order.price} грн.</td>
             <td>${order.status}</td>
-            <td><?php echo $order_status;?></td>
             `;
             orderTable.append(orderRow);
         }
-    } else {
-        console.log('bad')
-        return null;
-    }
+    } else return null;
 }
